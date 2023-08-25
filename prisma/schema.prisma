@@ -11,37 +11,36 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  password String
-  role     RoleEnumType @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  photo String?
-  cart     Cart?
-  orders   Order[]
+  id        String       @id @default(uuid())
+  email     String       @unique
+  password  String
+  role      RoleEnumType @default(USER)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  photo     String?
+  cart      Cart?
+  orders    Order[]
 
   @@index([email])
 }
 
-
 model Cart {
-  id       String            @id @default(uuid())
-  user     User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   String            @unique
-  products ProductsOnCarts[]
-  createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String            @id @default(uuid())
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String            @unique
+  products  ProductsOnCarts[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 }
 
 model ProductsOnCarts {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   cartId    String
-  cart      Cart    @relation(fields: [cartId], references: [id])
+  cart      Cart     @relation(fields: [cartId], references: [id])
   productId String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
@@ -57,18 +56,18 @@ model Product {
   productBrandId String
   productType    ProductType?       @relation(fields: [productTypeId], references: [id])
   productBrand   ProductBrand?      @relation(fields: [productBrandId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
 }
 
 model ProductInfo {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   title       String
   description String
-  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId   String
-  createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model ProductBrand {
@@ -77,8 +76,8 @@ model ProductBrand {
   productId String
   products  Product[]
   types     TypeBrands[]
-  createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 }
 
 model ProductType {
@@ -87,8 +86,8 @@ model ProductType {
   productId String
   products  Product[]
   brands    TypeBrands[]
-  createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 }
 
 model TypeBrands {
@@ -97,30 +96,30 @@ model TypeBrands {
   productType    ProductType  @relation(fields: [typeId], references: [id])
   brandId        String
   productBrandId ProductBrand @relation(fields: [brandId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }
 
 model Image {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   url       String
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
   createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 }
 
 model Order {
-  id       String             @id @default(uuid())
-  user     User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   String             @unique
-  products ProductsOnOrders[]
-  createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String             @id @default(uuid())
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String             @unique
+  products  ProductsOnOrders[]
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
 }
 
 model ProductsOnOrders {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   quantity  Int
   phone     String
   username  String
@@ -128,11 +127,11 @@ model ProductsOnOrders {
   region    String
   address   String
   productId String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
   orderId   String
-  order     Order   @relation(fields: [orderId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 }
 
 enum RoleEnumType {
